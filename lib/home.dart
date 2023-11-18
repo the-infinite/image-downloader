@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
     var listNotifier = ValueNotifier<List<Widget>>([]);
     final completeList = List<Widget>.empty(growable: true);
 
-    // Fair enough.
+    // Initiaize the Image Info store with the right size parameters
     ImageInfoStore.getInstance(300, size.width);
 
     return Scaffold(
@@ -31,7 +31,6 @@ class HomePage extends StatelessWidget {
                         child: ValueListenableBuilder(
                           valueListenable: listNotifier,
                           builder: (context, list, index) {
-
                             // Return this as you see it.
                             return GridView(
                               addAutomaticKeepAlives: false,
@@ -40,7 +39,6 @@ class HomePage extends StatelessWidget {
                                 crossAxisCount: 2,
                                 crossAxisSpacing:10,
                                 mainAxisSpacing: 10,
-                                
                               ),
                               children: list,
                             );
@@ -59,12 +57,17 @@ class HomePage extends StatelessWidget {
 
                             // Add 7 items to it then...
                             for(int i = 0; i < 7; i++) {
+                                // Build the current item
                                 final item = UtilityImageView(ValueNotifier<Uint8List?>(null));
+
+                                // Add it to the list of items.
                                 list.add(item);
+
+                                // Add it to the overall list of item.
                                 completeList.add(item);
                             }
 
-                            // Invoke the necessary listeners and 
+                            // This is our new list.
                             listNotifier.value = list;
                         },
 

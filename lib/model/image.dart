@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+/// This is the way we store responses of images while we are downloading them
+/// over the network.
 class ImageModel {
     Uint8List? list;
     bool error;
@@ -10,7 +12,8 @@ class ImageModel {
 /// The single instance we require.
 ImageInfoStore? _instance;
 
-/// We use this class to
+/// We use this class to store the information we use to standardize the height
+/// and width of all the images inside the app.
 class ImageInfoStore {
     final double height;
     final double width;

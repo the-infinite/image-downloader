@@ -17,7 +17,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^1.1.0
   flash: ^3.0.5+2
-  flutter_masonry_view: ^0.0.2
 
 dev_dependencies:
   flutter_test:
