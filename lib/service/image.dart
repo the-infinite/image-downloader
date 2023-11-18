@@ -9,18 +9,18 @@ typedef OnDownloadImage = void Function(
     int total, int downloaded, double progress);
 
 Future<Uint8List> getRandomImage(OnDownloadImage callback) async {
+  // Get the completer for this download activity.
+  final completer = Completer<Uint8List>();
+
   try {
     // First, let us send the request and keep the response.
     var request =
-        http.Request('GET', Uri.parse("https://picsum.photos/200/300"));
+        http.Request('GET', Uri.parse("https://picsum.photos/300/600"));
     var client = http.Client();
     var response = client.send(request);
 
     // Keep the number of downloaded images here.
     int downloaded = 0;
-
-    // Get the completer for this download activity.
-    final completer = Completer<Uint8List>();
 
     // This is where we would keep the pieces of the image we have downloaded.
     final List<List<int>> chunks = List.empty();
@@ -75,13 +75,14 @@ Future<Uint8List> getRandomImage(OnDownloadImage callback) async {
       }, onError: (error) => completer.completeError(error));
     });
 
-    // Return the future in this completer.
-    return completer.future;
   } catch (e) {
     // First, log this error to the console.
     log("${DateTime.now().toLocal().toIso8601String()}: $e");
 
-    // Next, rethrow it so that the controller can catch this.
-    rethrow;
+    // Spit this error back so it is handled on the outside.
+    completer.completeError(e);
   }
+
+  // Return the future in this completer.
+  return completer.future;
 }

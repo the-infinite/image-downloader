@@ -4,9 +4,9 @@ import 'dart:typed_data';
 import 'package:imageloader/model/image.dart';
 import 'package:imageloader/service/image.dart';
 
-void getImageSync(SendPort port, OnDownloadImage callback) async {
+void getImageSync(SendPort port) async {
     getRandomImage((total, downloaded, progress) {
-        callback(total, downloaded, progress);
+        // Fow now we do nothing...
     })
 
     // On error... we send an error report.
