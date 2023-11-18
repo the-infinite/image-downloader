@@ -23,7 +23,7 @@ Future<Uint8List> getRandomImage(OnDownloadImage callback) async {
     int downloaded = 0;
 
     // This is where we would keep the pieces of the image we have downloaded.
-    final List<List<int>> chunks = List.empty();
+    final List<List<int>> chunks = List.empty(growable: true);
 
     //* Listed to the response as a Stream<T>
     response.asStream().listen((http.StreamedResponse streamedResponse) {
@@ -39,7 +39,7 @@ Future<Uint8List> getRandomImage(OnDownloadImage callback) async {
         final length = streamedResponse.contentLength ?? 0;
 
         // Fetch the progress of our download in percentage.
-        final progress = (downloaded / length) / 100;
+        final progress = (downloaded / length) * 100;
 
         // Invoke the callback with these parameters.
         callback(length, downloaded, progress);
@@ -52,7 +52,7 @@ Future<Uint8List> getRandomImage(OnDownloadImage callback) async {
       }, onDone: () {
         // Get the length and progress (in %) again
         final completeLength = streamedResponse.contentLength ?? 0;
-        final progress = (downloaded / completeLength) / 100;
+        final progress = (downloaded / completeLength) * 100;
 
         // Invoke the callback with these parameters.
         callback(completeLength, downloaded, progress);
